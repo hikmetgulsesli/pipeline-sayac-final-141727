@@ -16,7 +16,7 @@ export default function App() {
   const reset = useCallback(() => dispatch({ type: 'RESET' }), []);
 
   const isEmpty = state.value === DEFAULT_COUNTER_MIN;
-  const showWarning = state.hasReachedMax;
+  const showWarning = state.hasReachedMax && !state.isWarningDismissed;
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--color-background)' }}>
@@ -37,9 +37,9 @@ export default function App() {
         <div className="flex items-center gap-3">
           <button
             aria-label="Geçmiş"
-            className="p-2 rounded-full transition-colors duration-200 active:scale-95"
+            className="p-2 rounded-full transition-colors duration-200 active:scale-95 cursor-pointer"
             style={{ color: 'var(--color-primary)' }}
-            onClick={reset}
+            onClick={() => { /* TODO: implement history view */ }}
           >
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>
               history
@@ -78,7 +78,7 @@ export default function App() {
           <button
             aria-label="Uyarıyı kapat"
             className="opacity-80 hover:opacity-100 transition-opacity p-1 rounded-full"
-            onClick={() => dispatch({ type: 'SET_VALUE', payload: DEFAULT_COUNTER_MAX - 1 })}
+            onClick={() => dispatch({ type: 'DISMISS_WARNING' })}
           >
             <span className="material-symbols-outlined text-sm">close</span>
           </button>
@@ -117,7 +117,7 @@ export default function App() {
                 </span>
                 <div
                   className="px-4 py-1.5 rounded-full inline-flex items-center gap-2 mb-2"
-                  style={{ backgroundColor: 'rgba(0,88,190,0.1)' }}
+                  style={{ backgroundColor: 'color-mix(in srgb, var(--color-primary) 10%, transparent)' }}
                 >
                   <span className="material-symbols-outlined text-sm" style={{ color: 'var(--color-primary)' }}>
                     info

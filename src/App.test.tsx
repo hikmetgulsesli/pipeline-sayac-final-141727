@@ -11,15 +11,15 @@ describe('App counter', () => {
 
   it('increments counter when Artır clicked', () => {
     render(<App />);
-    const incrementBtn = screen.getAllByLabelText('Artır')[0];
+    const incrementBtn = screen.getByLabelText('Artır');
     fireEvent.click(incrementBtn);
     expect(screen.getByText('1')).toBeInTheDocument();
   });
 
   it('decrements counter when Azalt clicked', () => {
     render(<App />);
-    const incrementBtn = screen.getAllByLabelText('Artır')[0];
-    const decrementBtn = screen.getAllByLabelText('Azalt')[0];
+    const incrementBtn = screen.getByLabelText('Artır');
+    const decrementBtn = screen.getByLabelText('Azalt');
     fireEvent.click(incrementBtn);
     fireEvent.click(incrementBtn);
     fireEvent.click(decrementBtn);
@@ -28,8 +28,8 @@ describe('App counter', () => {
 
   it('resets counter when Sıfırla clicked', () => {
     render(<App />);
-    const incrementBtn = screen.getAllByLabelText('Artır')[0];
-    const resetBtn = screen.getAllByLabelText('Sıfırla')[0];
+    const incrementBtn = screen.getByLabelText('Artır');
+    const resetBtn = screen.getByLabelText('Sıfırla');
     fireEvent.click(incrementBtn);
     fireEvent.click(incrementBtn);
     fireEvent.click(resetBtn);
@@ -38,7 +38,7 @@ describe('App counter', () => {
 
   it('shows max warning when reaching max', () => {
     render(<App />);
-    const incrementBtn = screen.getAllByLabelText('Artır')[0];
+    const incrementBtn = screen.getByLabelText('Artır');
     for (let i = 0; i < 10; i++) {
       fireEvent.click(incrementBtn);
     }
@@ -47,7 +47,7 @@ describe('App counter', () => {
 
   it('disables increment button at max', () => {
     render(<App />);
-    const incrementBtn = screen.getAllByLabelText('Artır')[0];
+    const incrementBtn = screen.getByLabelText('Artır');
     for (let i = 0; i < 10; i++) {
       fireEvent.click(incrementBtn);
     }
@@ -56,7 +56,7 @@ describe('App counter', () => {
 
   it('disables decrement button at min', () => {
     render(<App />);
-    const decrementBtn = screen.getAllByLabelText('Azalt')[0];
+    const decrementBtn = screen.getByLabelText('Azalt');
     expect(decrementBtn).toBeDisabled();
   });
 

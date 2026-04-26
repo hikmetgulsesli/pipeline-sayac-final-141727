@@ -56,7 +56,7 @@ export function MaksimumUyariBanneri(props: MaksimumUyariBanneriProps) {
       {/*  Outer subtle ring  */}
       <div className="absolute inset-0 rounded-full border border-error opacity-20"></div>
       {/*  Inner progress ring representation  */}
-      <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+      <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
       <circle className="text-error" cx="50" cy="50" fill="none" r="48" stroke="currentColor" stroke-dasharray="301.59" stroke-dashoffset="0" stroke-width="2"></circle>
       </svg>
       <div className="text-center">
@@ -75,7 +75,7 @@ export function MaksimumUyariBanneri(props: MaksimumUyariBanneriProps) {
       <span className="material-symbols-outlined text-3xl" data-icon="remove">remove</span>
       </button>
       {/*  Increase Button (Disabled state)  */}
-      <button aria-label="Artır" className="w-24 h-24 rounded-full bg-surface-variant text-on-surface-variant/30 flex items-center justify-center cursor-not-allowed shadow-[0_20px_40px_rgba(17,24,39,0.02)] transition-transform" disabled="">
+      <button aria-label="Artır" className="w-24 h-24 rounded-full bg-surface-variant text-on-surface-variant/30 flex items-center justify-center cursor-not-allowed shadow-[0_20px_40px_rgba(17,24,39,0.02)] transition-transform" disabled>
       <span className="material-symbols-outlined text-4xl" data-icon="add">add</span>
       </button>
       {/*  Reset Button  */}
@@ -121,13 +121,13 @@ export function MaksimumUyariBanneri(props: MaksimumUyariBanneriProps) {
       </button>
       </div>
       {/*  Padding for fixed web nav to ensure content isn't hidden  */}
-      <style>
-              @media (min-width: 768px) {
-                  main {
-                      padding-left: 16rem; /* Width of the side nav */
-                  }
-              }
-          </style>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (min-width: 768px) {
+          main {
+            padding-left: 16rem;
+          }
+        }
+      ` }} />
     </>
   );
 }

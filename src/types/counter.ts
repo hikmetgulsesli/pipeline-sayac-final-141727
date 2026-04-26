@@ -1,6 +1,7 @@
 export interface CounterState {
   value: number;
   hasReachedMax: boolean;
+  isWarningDismissed: boolean;
   min: number;
   max: number;
 }
@@ -9,7 +10,8 @@ export type CounterAction =
   | { type: 'INCREMENT' }
   | { type: 'DECREMENT' }
   | { type: 'RESET' }
-  | { type: 'SET_VALUE'; payload: number };
+  | { type: 'SET_VALUE'; payload: number }
+  | { type: 'DISMISS_WARNING' };
 
 export const DEFAULT_COUNTER_MIN = 0;
 export const DEFAULT_COUNTER_MAX = 10;
@@ -22,6 +24,7 @@ export function createCounterState(
   return {
     value: Math.min(Math.max(initialValue, min), max),
     hasReachedMax: initialValue >= max,
+    isWarningDismissed: false,
     min,
     max,
   };
@@ -32,9 +35,9 @@ export function counterReducer(state: CounterState, action: CounterAction): Coun
     case 'INCREMENT': {
       const next = state.value + 1;
       if (next > state.max) {
-        return { ...state, hasReachedMax: true };
+        return { ...state, hasReachedMax: true, isWarningDismissed: false };
       }
-      return { ...state, value: next, hasReachedMax: next >= state.max };
+      return { ...state, value: next, hasReachedMax: next >= state.max, isWarningDismissed: false };
     }
     case 'DECREMENT': {
       const next = Math.max(state.value - 1, state.min);
@@ -46,6 +49,8 @@ export function counterReducer(state: CounterState, action: CounterAction): Coun
       const clamped = Math.min(Math.max(action.payload, state.min), state.max);
       return { ...state, value: clamped, hasReachedMax: clamped >= state.max };
     }
+    case 'DISMISS_WARNING':
+      return { ...state, isWarningDismissed: true };
     default:
       return state;
   }
