@@ -1,0 +1,38 @@
+[
+  {
+    "screenId": "b16ffcb09cb4414e87d1a85c784c7565",
+    "title": "Sayaç Uygulaması PRD",
+    "componentName": "SayacUygulamasiPrd",
+    "file": "src/screens/SayacUygulamasiPrd.tsx",
+    "buttons": 0,
+    "inputs": 0,
+    "links": 0
+  },
+  {
+    "screenId": "15ba186292974141b4eb9e31ae16e8e0",
+    "title": "Ana Sayaç Ekranı",
+    "componentName": "AnaSayacEkrani",
+    "file": "src/screens/AnaSayacEkrani.tsx",
+    "buttons": 8,
+    "inputs": 0,
+    "links": 0
+  },
+  {
+    "screenId": "cc5ccafb049244f597718342991008c6",
+    "title": "Boş Durum Ekranı",
+    "componentName": "BosDurumEkrani",
+    "file": "src/screens/BosDurumEkrani.tsx",
+    "buttons": 3,
+    "inputs": 0,
+    "links": 6
+  },
+  {
+    "screenId": "edd8611407af49e1928984d927bccbeb",
+    "title": "Maksimum Uyarı Bannerı",
+    "componentName": "MaksimumUyariBanneri",
+    "file": "src/screens/MaksimumUyariBanneri.tsx",
+    "buttons": 12,
+    "inputs": 0,
+    "links": 0
+  }
+]
