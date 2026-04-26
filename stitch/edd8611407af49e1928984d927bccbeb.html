@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ZenCounter - Maksimum Uyarı</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e7e8e9",
+                        "surface-container": "#edeeef",
+                        "background": "#f8f9fa",
+                        "tertiary-container": "#b75b00",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e1e3e4",
+                        "on-primary-fixed-variant": "#004395",
+                        "secondary": "#495e8a",
+                        "primary-container": "#2170e4",
+                        "on-tertiary-fixed": "#311400",
+                        "on-primary-container": "#fefcff",
+                        "on-secondary-fixed": "#001a42",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#424754",
+                        "inverse-primary": "#adc6ff",
+                        "secondary-container": "#b6ccff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-tertiary-container": "#fffbff",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-surface": "#191c1d",
+                        "primary": "#0058be",
+                        "on-primary-fixed": "#001a42",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary-container": "#405682",
+                        "on-primary": "#ffffff",
+                        "surface": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c2c6d6",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "tertiary": "#924700",
+                        "surface-tint": "#005ac2",
+                        "surface-bright": "#f8f9fa",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#304671",
+                        "outline": "#727785",
+                        "on-background": "#191c1d",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#e1e3e4",
+                        "inverse-surface": "#2e3132",
+                        "primary-fixed-dim": "#adc6ff",
+                        "secondary-fixed-dim": "#b1c6f9",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "surface-dim": "#d9dadb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "display": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased overflow-hidden">
+<!-- TopAppBar from JSON -->
+<header class="sticky top-0 z-50 w-full flex justify-between items-center px-8 h-16 bg-[#f8f9fa]/80 dark:bg-slate-900/80 backdrop-blur-[20px] shadow-[0_1px_0_0_rgba(0,0,0,0.05)] dark:shadow-none docked full-width top-0">
+<div class="text-xl font-bold text-slate-900 dark:text-slate-50 tracking-[-0.02em] font-['Inter']">
+            ZenCounter
+        </div>
+<div class="flex items-center gap-4">
+<button class="text-blue-600 dark:text-blue-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="history" style="font-variation-settings: 'FILL' 0;">history</span>
+</button>
+<button class="text-blue-600 dark:text-blue-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+</div>
+</header>
+<!-- Maximum Warning Banner -->
+<div class="w-full bg-error text-on-error py-3 px-6 flex justify-between items-center z-40 relative shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-body text-sm font-medium">Uyarı: Maksimum sayaç değeri olan 10'a ulaşıldı.</span>
+</div>
+<button class="text-on-error opacity-80 hover:opacity-100 transition-opacity p-1 rounded-full hover:bg-black/10">
+<span class="material-symbols-outlined text-sm" data-icon="close">close</span>
+</button>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center p-8 relative overflow-hidden">
+<!-- Background Decor -->
+<div class="absolute inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center">
+<div class="w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-gradient-to-br from-error-container to-surface-container-low rounded-full blur-[100px] opacity-40 transform translate-y-20"></div>
+</div>
+<div class="z-10 w-full max-w-md flex flex-col items-center gap-16">
+<!-- Metadata Label -->
+<div class="text-center">
+<span class="font-label text-[0.75rem] text-error uppercase tracking-[0.05em] font-bold bg-error-container/50 px-4 py-2 rounded-full">
+                    Hedefe Ulaşıldı
+                 </span>
+</div>
+<!-- Counter Display -->
+<div class="relative w-64 h-64 flex items-center justify-center">
+<!-- Outer subtle ring -->
+<div class="absolute inset-0 rounded-full border border-error opacity-20"></div>
+<!-- Inner progress ring representation -->
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-error" cx="50" cy="50" fill="none" r="48" stroke="currentColor" stroke-dasharray="301.59" stroke-dashoffset="0" stroke-width="2"></circle>
+</svg>
+<div class="text-center">
+<h1 class="font-display text-[72px] font-bold text-error tracking-tighter leading-none" style="text-shadow: 0 10px 30px rgba(186, 26, 26, 0.1);">
+                        10
+                    </h1>
+<p class="font-body text-sm text-on-surface-variant mt-2 opacity-60">
+                        Zikir
+                    </p>
+</div>
+</div>
+<!-- Controls -->
+<div class="flex items-center gap-6">
+<!-- Decrease Button -->
+<button aria-label="Azalt" class="w-16 h-16 rounded-full bg-surface-container-highest text-primary flex items-center justify-center hover:bg-surface-variant transition-colors active:scale-95">
+<span class="material-symbols-outlined text-3xl" data-icon="remove">remove</span>
+</button>
+<!-- Increase Button (Disabled state) -->
+<button aria-label="Artır" class="w-24 h-24 rounded-full bg-surface-variant text-on-surface-variant/30 flex items-center justify-center cursor-not-allowed shadow-[0_20px_40px_rgba(17,24,39,0.02)] transition-transform" disabled="">
+<span class="material-symbols-outlined text-4xl" data-icon="add">add</span>
+</button>
+<!-- Reset Button -->
+<button aria-label="Sıfırla" class="w-16 h-16 rounded-full bg-surface-container-highest text-primary flex items-center justify-center hover:bg-surface-variant transition-colors active:scale-95">
+<span class="material-symbols-outlined text-2xl" data-icon="refresh">refresh</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar from JSON -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-6 pt-2 bg-white/80 dark:bg-slate-950/80 backdrop-blur-[20px] rounded-t-[24px] border-none shadow-[0_-20px_40px_rgba(17,24,39,0.06)] md:hidden">
+<!-- Active Tab: Counter (Assumed based on intent) -->
+<button class="flex flex-col items-center justify-center bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-[12px] p-3 hover:text-blue-500 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="exposure" style="font-variation-settings: 'FILL' 1;">exposure</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-[0.05em] uppercase">Counter</span>
+</button>
+<!-- Inactive Tab: Sessions -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 p-3 hover:text-blue-500 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="timer" style="font-variation-settings: 'FILL' 0;">timer</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-[0.05em] uppercase">Sessions</span>
+</button>
+<!-- Inactive Tab: Preferences -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 p-3 hover:text-blue-500 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="tune" style="font-variation-settings: 'FILL' 0;">tune</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-[0.05em] uppercase">Preferences</span>
+</button>
+</nav>
+<!-- Web Navigation Placeholder (Hidden on mobile) -->
+<div class="hidden md:flex flex-col gap-2 p-6 w-64 bg-surface-container-low border-none h-screen fixed left-0 top-16 z-40">
+<!-- Active Tab -->
+<button class="flex items-center gap-3 bg-blue-50 text-blue-700 p-3 rounded-xl transition-all">
+<span class="material-symbols-outlined" data-icon="exposure" style="font-variation-settings: 'FILL' 1;">exposure</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Counter</span>
+</button>
+<!-- Inactive Tabs -->
+<button class="flex items-center gap-3 text-slate-500 p-3 rounded-xl hover:bg-slate-100 transition-all">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Sessions</span>
+</button>
+<button class="flex items-center gap-3 text-slate-500 p-3 rounded-xl hover:bg-slate-100 transition-all">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+<span class="font-['Inter'] text-sm font-medium tracking-tight">Preferences</span>
+</button>
+</div>
+<!-- Padding for fixed web nav to ensure content isn't hidden -->
+<style>
+        @media (min-width: 768px) {
+            main {
+                padding-left: 16rem; /* Width of the side nav */
+            }
+        }
+    </style>
+</body></html>

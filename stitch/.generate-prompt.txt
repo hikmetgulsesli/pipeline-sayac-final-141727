@@ -1,0 +1,275 @@
+# Ürün Gereksinimleri Dokümanı (PRD)
+**Proje:** pipeline-sayac-final-141727  
+**Platform:** Web  
+**Framework:** React 18 + Vite + TypeScript  
+**Versiyon:** 1.0.0  
+
+---
+
+## 1. Genel Bakış
+
+Bu proje, kullanıcıların sayısal bir değeri artırma, azaltma ve sıfırlama ile takip edebildiği minimal bir sayaç uygulamasıdır. Hedef kitle genel kullanıcı kitlesidir ve Türkçe arayüz ile sunulacaktır. Uygulama tek sayfa (SPA) olarak geliştirilecek, tarayıcıda yerel olarak çalışacak ve herhangi bir harici API bağımlılığı olmayacaktır. Proje smoke test amaçlı kısa bir ürün olarak tasarlanmıştır, en fazla 3 story ile tamamlanacaktır.
+
+---
+
+## 2. Hedefler
+
+- **F1:** Kullanıcı sayaç değerini 1 artırabilir (Artır butonu).
+- **F2:** Kullanıcı sayaç değerini 1 azaltabilir (Azalt butonu), minimum değer 0'dır.
+- **F3:** Kullanıcı sayaç değerini sıfırlayabilir (Sıfırla butonu).
+- **F4:** Maksimum limit (10) aşıldığında kullanıcıya Türkçe uyarı mesajı gösterilir.
+- **F5:** Sayacın mevcut değeri ekranda net şekilde görüntülenir.
+- **F6:** Boş durumda (değer = 0) kullanıcıya görsel/ipucu mesajı gösterilir.
+
+---
+
+## 3. Tech Stack Detayı
+
+| Katman | Seçim |
+|--------|-------|
+| Framework | React 18 |
+| Build Tool | Vite 5 |
+| Dil | TypeScript 5 |
+| Styling | CSS Modules |
+| State Yönetimi | useState (yerel bileşen state'i) |
+| Routing | Yok (tek sayfa) |
+| Storage | localStorage (sayac değerini kalıcılaştırmak için) |
+| İkon | Lucide React |
+| Paket Yöneticisi | npm |
+
+### Klasör Yapısı
+
+```
+src/
+├── components/
+│   ├── Counter/
+│   │   ├── Counter.tsx
+│   │   └── Counter.module.css
+│   ├── Button/
+│   │   ├── Button.tsx
+│   │   └── Button.module.css
+│   └── EmptyState/
+│       ├── EmptyState.tsx
+│       └── EmptyState.module.css
+├── hooks/
+│   └── useCounter.ts
+├── types/
+│   └── counter.ts
+├── App.tsx
+├── main.tsx
+└── index.css
+```
+
+---
+
+## 4. Fonksiyononel Gereksinimler
+
+### 4.1 Sayaç Gösterimi
+- Ekranda sayaç değeri büyük font ile ortalanmış şekilde gösterilir.
+- Değer 0 olduğunda boş durum görsel mesajı gösterilir.
+- Değer değiştiğinde animasyonlu geçiş uygulanır (küçük scale pulse).
+- Sayacın altında minimum ve maksimum limit bilgisi yer alır.
+
+### 4.2 Artır Butonu
+- Etiket: "Artır"
+- Her tıklamada sayaç değeri +1 artar.
+- Maksimum değere (10) ulaşıldığında buton devre dışı kalır ve uyarı mesajı gösterilir.
+- Uyarı mesajı: "Maksimum limite ulaşıldı! Sayaç 10'dan büyük olamaz."
+- Başarı durumu: Değer güncellenir, buton aktif kalır.
+
+### 4.3 Azalt Butonu
+- Etiket: "Azalt"
+- Sayaç değeri > 0 ise -1 azaltır.
+- Sayaç değeri = 0 olduğunda buton devre dışı kalır.
+- Azaltma negatif değere izin vermez; minimum 0'dır.
+
+### 4.4 Sıfırla Butonu
+- Etiket: "Sıfırla"
+- Sayaç değerini 0'a getirir.
+- localStorage'dan değeri temizler.
+- Kullanıcıya onay gerektirmez (doğrudan sıfırlar).
+
+### 4.5 Maksimum Limit Uyarısı
+- Limit: 10
+- Aşım durumunda ekranın üst kısmında kırmızı uyarı banner'ı gösterilir.
+- Uyarı metni (Türkçe): "Uyarı: Maksimum sayaç değeri olan 10'a ulaşıldı."
+- Banner otomatik olarak 3 saniye sonra kaybolur veya kullanıcı kapatana kadar görünür.
+- Renk: Error red (#EF4444) arka plan, beyaz metin.
+
+### 4.6 Boş Durum (Empty State)
+- Sayaç değeri = 0 olduğunda gösterilir.
+- Mesaj: "Sayaç sıfır. Artırmak için 'Artır' butonuna tıklayın."
+- Görsel olarak farklı bir renk (primary color) ile vurgulanır.
+
+---
+
+## 5. Veri Modeli
+
+### 5.1 CounterState
+```typescript
+interface CounterState {
+  value: number;         // Mevcut sayaç değeri, min: 0, max: 10
+  hasReachedMax: boolean; // Maksimum limite ulaşıldığında true
+}
+```
+
+### 5.2 localStorage Şeması
+Key: `counter_value`  
+Value: Sayısal değer (string olarak saklanır, örn. "5")  
+Yaşam döngüsü: Sayfa her yüklendiğinde okunur, her değişiklikte güncellenir.
+
+---
+
+## 6. UI/UX Gereksinimler
+
+### 6.1 Design System
+
+#### Aesthetic Seçimi: Minimal
+Temiz çizgiler, bol beyaz alan, odak noktası sayaç değerinde. Modern ve sade.
+
+#### Renk Paleti
+| Kullanım | Hex Kodu |
+|----------|----------|
+| Primary | #3B82F6 (mavi) |
+| Primary Hover | #2563EB |
+| Secondary | #6B7280 (gri) |
+| Background | #F9FAFB (açık gri) |
+| Surface | #FFFFFF (beyaz) |
+| Text Primary | #111827 (koyu) |
+| Text Secondary | #6B7280 (gri) |
+| Border | #E5E7EB |
+| Success | #10B981 (yeşil) |
+| Error | #EF4444 (kırmızı) |
+| Warning | #F59E0B (amber) |
+
+#### Tipografi
+- Heading (kullanılmıyor, sayaç değeri büyük numerik display): Font: Inter, size: 72px, weight: 700
+- Body/Labels: Font: Inter, size: 16px, weight: 400/500/600
+- Buton metinleri: Font: Inter, size: 16px, weight: 600
+
+#### İkon Kütüphanesi
+Lucide React — ikon isimleri: `Plus` (artır), `Minus` (azalt), `RotateCcw` (sıfırla)
+
+#### Spacing Scale
+4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 px
+
+#### Border Radius
+- Butonlar: 8px
+- Kartlar/Container: 12px
+- Input: 6px
+
+#### Shadow Tanımları
+- Surface kart: `0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)`
+- Elevated (modal/banner): `0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06)`
+
+### 6.2 Buton Bileşeni Pattern
+- Üç varyant: primary (mavi), secondary (gri), danger (kırmızı)
+- Üç boyut: sm (32px height), md (40px height), lg (48px height)
+- States: default, hover, active, disabled
+- Disabled: opacity 0.5, cursor not-allowed
+
+### 6.3 Sayfa Layout
+- Tek kolon, dikey hizalama
+- Sayac değeri ekranın tam ortasında (vertikal + horizontal)
+- Butonlar sayaç değerinin altında yatay sırada
+- Maksimum 600px genişlikte container, max-width ile kısıtlı
+
+---
+
+## 7. Non-Functional Requirements
+
+### 7.1 Performans
+- İlk yükleme < 1 saniye (Vite hızlı build)
+- Tüm interaksiyonlar anlık (state değişimi < 50ms)
+- Bundle size hedefi: < 50KB (gzip)
+
+### 7.2 Erişilebilirlik (WCAG 2.1 AA)
+- Tüm butonlar ARIA label ile donatılır
+- Klavye navigasyonu: Tab ile butonlar arası geçiş, Enter/Space ile tıklama
+- Ekran okuyucu uyumlu: ARIA live region sayaç değeri değişikliğini duyurur
+- Kontrast oranı >= 4.5:1 (buton metinleri beyaz zemin üzerinde)
+- Focus state: Tüm interactive elementlerde focus ring görünür (2px outline, primary color)
+- Touch hedefleri >= 44x44 px
+
+### 7.3 Tarayıcı Desteği
+- Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- iOS Safari 14+, Android Chrome 90+
+- Responsive: mobile 320px+ → desktop 1920px+
+
+---
+
+## 8. Proje Yapısı (Tekrar)
+
+```
+src/
+├── components/
+│   ├── Counter/
+│   │   ├── Counter.tsx
+│   │   └── Counter.module.css
+│   ├── Button/
+│   │   ├── Button.tsx
+│   │   └── Button.module.css
+│   └── EmptyState/
+│       ├── EmptyState.tsx
+│       └── EmptyState.module.css
+├── hooks/
+│   └── useCounter.ts
+├── types/
+│   └── counter.ts
+├── App.tsx
+├── main.tsx
+└── index.css
+```
+
+---
+
+## 9. Window State (Testing / Dogfood)
+
+Test ve dogfood aşaması için global window objesi:
+
+```typescript
+window.app = {
+  state: 'idle', // 'idle' | 'loading' (simüle edilebilir) | 'warning'
+  counter: {
+    value: 0,
+    min: 0,
+    max: 10,
+    hasReachedMax: false
+  },
+  actions: {
+    increment: () => void,
+    decrement: () => void,
+    reset: () => void
+  }
+}
+```
+
+---
+
+## 10. Ekranlar (Zorunlu Tablo)
+
+| # | Ekran Adı | Tür | Açıklama |
+|---|-----------|-----|----------|
+| 1 | Ana Sayaç Ekranı | page | Sayaç değeri, artır/azalt/sıfırla butonları, boş durum gösterimi |
+| 2 | Maksimum Uyarı Bannerı | overlay | Limit aşıldığında ekranın üstünde görünen kırmızı uyarı banner'ı |
+| 3 | Boş Durum Ekranı | empty-state | Sayaç değeri 0 olduğunda gösterilen ipucu görseli/mesajı |
+
+---
+
+## 11. Önemli Notlar — Smoke Test Kapsamı
+
+- Bu proje smoke test amaçlıdır; 3 story ile sınırlıdır.
+- localStorage persistansı mevcuttur ancak sunucu/servis yoktur.
+- Uygulama tek ekran üzerinde tamamlanır.
+- Animasyonlar minimal (sadece counter pulse efekti).
+
+Generate a SEPARATE screen design for EVERY page, view, modal, dialog, tab panel, and settings screen described in this PRD. Do NOT skip ANY screen — even if it seems minor.
+
+MANDATORY SCREENS:
+- If the PRD mentions "settings" or "ayarlar" → generate a Settings screen
+- If the PRD mentions tabs or bottom navigation → generate EACH tab view as a separate screen
+- If the PRD mentions modals (statistics, help, share, confirmation) → generate each as a separate screen
+- If the PRD mentions error states, empty states, loading states → generate those too
+- Generate at least as many screens as there are distinct views/pages/modals in the PRD
+
+All visible text must be in Turkish. Use a dark, modern theme.
